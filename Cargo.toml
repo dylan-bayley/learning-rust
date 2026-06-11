@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "module_01_basics",
+    "module_02_ownership",
+    "module_03_structs_enums",
+    "module_04_error_handling",
+    "module_05_traits_iterators",
+    "module_06_async_axum",
+]
+resolver = "2"
