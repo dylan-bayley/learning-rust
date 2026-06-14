@@ -7,13 +7,18 @@
 // Convert Celsius to Fahrenheit.
 // Formula: F = C * 9/5 + 32
 pub fn celsius_to_fahrenheit(celsius: f64) -> f64 {
-    todo!()
+    let fahrenheit: f64 = celsius *9.0/5.0 + 32.0;
+    fahrenheit
 }
 
 // Exercise 2
 // Return true if n is even, false otherwise.
 pub fn is_even(n: i32) -> bool {
-    todo!()
+    if n % 2 == 0 {
+        true
+    } else {
+        false
+    }
 }
 
 // Exercise 3
@@ -21,27 +26,55 @@ pub fn is_even(n: i32) -> bool {
 // Return "Fizz" for multiples of 3, "Buzz" for multiples of 5,
 // "FizzBuzz" for multiples of both, otherwise the number as a string.
 pub fn fizzbuzz(n: u32) -> String {
-    todo!()
+    if n % 3 == 0 && n % 5 == 0 {
+        "FizzBuzz".to_string()
+    } else if n % 5 == 0 {
+        "Buzz".to_string()
+    } else if n % 3 == 0 {
+        "Fizz".to_string()
+    } else {
+        n.to_string()
+    }
 }
 
 // Exercise 4
 // Count the number of vowels (a, e, i, o, u — lowercase and uppercase) in a string.
 pub fn count_vowels(s: &str) -> usize {
-    todo!()
+    let mut count = 0;
+    let vowels = ['a', 'e', 'i','o', 'u'];
+    for c in s.chars() {
+        if vowels.contains(&c.to_ascii_lowercase()) {
+            count += 1;
+        }
+    }
+    count
 }
 
 // Exercise 5
 // Return the largest number in a non-empty slice.
 // Hint: iterate and keep track of the largest value seen.
 pub fn find_max(numbers: &[i32]) -> i32 {
-    todo!()
+    let len = numbers.len();
+    let mut max_seen: i32 = numbers[0];
+    for i in 1..len {   
+        if numbers[i] > max_seen {
+            max_seen = numbers[i];
+        }
+    }
+    max_seen
 }
 
 // Exercise 6
 // Given a Vec<i32>, return a new Vec<i32> containing only the positive numbers.
 // Hint: use a for loop and push to a new Vec, or look at .iter().filter().collect()
 pub fn keep_positive(numbers: &[i32]) -> Vec<i32> {
-    todo!()
+    let mut positive: Vec<i32> = Vec::new();
+    for i in 0..numbers.len() {
+        if numbers[i] > 0 {
+            positive.push(numbers[i]);
+        } 
+    }
+    positive
 }
 
 // ---- Tests ----------------------------------------------------------------
