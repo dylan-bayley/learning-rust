@@ -11,14 +11,14 @@
 // The caller should still be able to use the string after calling this.
 // Hint: the parameter should be a reference.
 pub fn string_length(s: &String) -> usize {
-    todo!()
+    s.len()
 }
 
 // Exercise 2
 // Append " world" to the string.
 // The function must modify the original string (not return a new one).
 pub fn append_world(s: &mut String) {
-    todo!()
+    s.push_str(" world")
 }
 
 // Exercise 3
@@ -26,14 +26,23 @@ pub fn append_world(s: &mut String) {
 // If there is no space, return the whole string.
 // The return type is &str — a slice of the input. Don't allocate a new String.
 pub fn first_word(s: &str) -> &str {
-    todo!()
+    // find the space in the string
+    let space_index = s.find(' ');
+    match space_index {
+        Some(i) => &s[..i],
+        None => &s,
+    }
 }
 
 // Exercise 4
 // Return the sum of all elements in a slice.
 // The Vec should still be usable after calling this function.
 pub fn sum_slice(numbers: &[i32]) -> i32 {
-    todo!()
+    let mut sum: i32 = 0;
+    for n in numbers {
+        sum += n;
+    }
+    sum
 }
 
 // Exercise 5
@@ -41,14 +50,23 @@ pub fn sum_slice(numbers: &[i32]) -> i32 {
 // Both strings should still be usable after calling this.
 // Hint: you need a lifetime annotation — look at the README section on lifetimes.
 pub fn longer<'a>(a: &'a str, b: &'a str) -> &'a str {
-    todo!()
+    if a.len() >= b.len() {
+        a
+    } else {
+        b
+    }
+
 }
 
 // Exercise 6
 // Given a Vec<String>, return a new Vec<String> with each string uppercased.
 // Clone the strings — don't consume the input Vec.
 pub fn uppercase_all(words: &[String]) -> Vec<String> {
-    todo!()
+    let mut clone:Vec<String> = Vec::new();
+    for s in words {
+        clone.push(s.to_uppercase());
+    }
+    clone
 }
 
 // ---- Tests ----------------------------------------------------------------
