@@ -116,6 +116,22 @@ Key differences:
 - The last expression in a block (without `;`) is automatically returned
 - You can also use `return x + y;` explicitly
 
+### Visibility: `pub`
+
+By default, functions are **private** — only accessible within the same module. Add `pub` to make a function accessible from outside:
+
+```rust
+pub fn calculate_tax(amount: f64) -> f64 {  // callable from other modules
+    amount * 0.2
+}
+
+fn validate(order: &Order) -> bool {  // internal helper — private
+    order.amount > 0.0
+}
+```
+
+Rule of thumb: **expose the interface, hide the implementation.** Only add `pub` when something outside the module needs to call it directly.
+
 ```rust
 fn greet(name: &str) -> String {
     format!("Hello, {}!", name)  // like f"Hello, {name}!"
