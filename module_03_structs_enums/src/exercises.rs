@@ -17,22 +17,28 @@ pub struct Circle {
 impl Circle {
     // Create a new Circle
     pub fn new(radius: f64) -> Circle {
-        todo!()
+        Circle { radius: radius }
     }
 
     // Area of the circle
     pub fn area(&self) -> f64 {
-        todo!()
+        std::f64::consts::PI*self.radius.powi(2)
     }
 
     // Circumference of the circle (2 * pi * r)
     pub fn circumference(&self) -> f64 {
-        todo!()
+        2.0 * std::f64::consts::PI * self.radius
     }
 
     // Return true if this circle is larger (by area) than other
     pub fn is_larger_than(&self, other: &Circle) -> bool {
-        todo!()
+        if self.area() > other.area() {
+            true
+        } else {
+            false
+        }
+        // better way to do this is
+        // self.area() > other.area()
     }
 }
 
@@ -48,17 +54,26 @@ pub enum Temperature {
 impl Temperature {
     // Convert to Celsius (if already Celsius, return as-is)
     pub fn to_celsius(&self) -> f64 {
-        todo!()
+        match self {
+            Temperature::Celsius(c) => *c, // we use a * here to dereference the pointer, we want the actual value to be returned. 
+            Temperature::Fahrenheit(f) => (f - 32.0) * 5.0 / 9.0, // When you do arithmatic in rust it dereferences the pointer for you which is why we dont need the asterix here. 
+        }
     }
 
     // Convert to Fahrenheit (if already Fahrenheit, return as-is)
     pub fn to_fahrenheit(&self) -> f64 {
-        todo!()
+        match self {
+            Temperature::Celsius(c) => (c * 9.0/5.0) + 32.0,
+            Temperature::Fahrenheit(f) => *f, 
+        }
     }
 
     // Return a human-readable description: e.g. "100°C" or "212°F"
     pub fn describe(&self) -> String {
-        todo!()
+        match self {
+            Temperature::Celsius(c) => format!("{}°C", *c), // note that * isnt required here because format dereferences it
+            Temperature::Fahrenheit(f) => format!("{}°F", *f), // same as above comment 
+        }
     }
 }
 
