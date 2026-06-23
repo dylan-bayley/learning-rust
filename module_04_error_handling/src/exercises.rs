@@ -10,7 +10,8 @@ use thiserror::Error;
 // Parse a string as an integer and double it.
 // Return an Err if parsing fails.
 pub fn parse_and_double(s: &str) -> Result<i32, std::num::ParseIntError> {
-    todo!()
+    let n: i32 = s.parse()?; // the ? replaces the requirement for a match statement, which means if its okay, itll pass back the okay value, if not, pass back the error. 
+    Ok(n*2)
 }
 
 // ---- Exercise 2: Chaining with ? --------------------------------------------
@@ -18,7 +19,9 @@ pub fn parse_and_double(s: &str) -> Result<i32, std::num::ParseIntError> {
 // Parse two strings as integers and return their sum.
 // Return an Err if either fails to parse.
 pub fn parse_and_add(a: &str, b: &str) -> Result<i32, std::num::ParseIntError> {
-    todo!()
+    let a_i: i32 = a.parse()?;
+    let b_i: i32 = b.parse()?;
+    Ok(a_i + b_i)
 }
 
 // ---- Exercise 3: Custom error type ------------------------------------------
@@ -31,17 +34,26 @@ pub fn parse_and_add(a: &str, b: &str) -> Result<i32, std::num::ParseIntError> {
 
 #[derive(Debug, Error, PartialEq)]
 pub enum MathError {
-    // TODO: add your variants here with #[error("...")] attributes
+    #[error("Division by zero")]  // this derive passes back the Error message
+    DivisionByZero,
+    #[error("Negative Square Root: '{0}'")] // note that this message expects a value to be returned with the error
+    NegativeSquareRoot(f64),
 }
 
 // Divide a by b. Return MathError::DivisionByZero if b == 0.0
 pub fn safe_divide(a: f64, b: f64) -> Result<f64, MathError> {
-    todo!()
+    if b == 0.0 {
+        return Err(MathError::DivisionByZero);
+    }
+    Ok(a / b)
 }
 
 // Return the square root of x. Return MathError::NegativeSquareRoot(x) if x < 0.
 pub fn safe_sqrt(x: f64) -> Result<f64, MathError> {
-    todo!()
+    if x < 0.0 {
+        return Err(MathError::NegativeSquareRoot(x));
+    }
+    Ok(x.sqrt())
 }
 
 // ---- Exercise 4: Error propagation ------------------------------------------
@@ -52,7 +64,11 @@ pub fn safe_sqrt(x: f64) -> Result<f64, MathError> {
 //
 // Return type uses Box<dyn std::error::Error> to accept multiple error types.
 pub fn parse_and_sqrt(s: &str) -> Result<f64, Box<dyn std::error::Error>> {
-    todo!()
+    let num: f64 = s.parse().map_err(|e: std::num::ParseFloatError|e.to_string())?;
+    if num < 0.0 {
+        return Err(MathError::NegativeSquareRoot(num).into());
+    }
+    Ok(num.sqrt())
 }
 
 // ---- Exercise 5: Result combinators -----------------------------------------
@@ -60,7 +76,13 @@ pub fn parse_and_sqrt(s: &str) -> Result<f64, Box<dyn std::error::Error>> {
 // Given a Vec of strings, parse each as i32. Return a Vec of only the
 // successfully parsed values (skip the failures — don't return an error).
 pub fn parse_all_ok(strings: &[&str]) -> Vec<i32> {
-    todo!()
+    let mut v: Vec<i32> = Vec::new();
+    for s in strings {
+        if let Ok(num) = s.parse::<i32>() {
+            v.push(num);
+        }
+    }
+    v
 }
 
 // ---- Tests ----------------------------------------------------------------
